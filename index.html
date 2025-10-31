@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>😺 당신의 먀음</title>
+    <style>
+        @font-face {
+            font-family: 'Ridibatang';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 🧀 치즈 고양이 테마 */
+            --bg-primary: #fffbf0;
+            --bg-secondary: #fff9e6;
+            --bg-tertiary: #fff4d6;
+
+            --text-primary: #5c5042;
+            --text-secondary: #8b7355;
+
+            --accent: #ffb84d;
+            --accent-hover: #ffa726;
+            --border: #ffe4a3;
+
+            /* 🌈 포스트잇 색상 */
+            --post-it-yellow: #fff9c4;
+            --post-it-pink: #ffd8e4;
+            --post-it-blue: #d4e4ff;
+            --post-it-green: #d4f4dd;
+            --post-it-lavender: #e3d9ff;
+            --post-it-orange: #ffe1b2;
+            --post-it-gray: #e7e3dc;
+
+            /* 버튼 색상 */
+            --btn-action: #f4c87a;
+        }
+
+        body {
+            font-family: 'Ridibatang', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header-icons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .icon-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* 상단 컨트롤 */
+        .top-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Ridibatang', sans-serif;
+            color: var(--text-primary);
+        }
+
+        .control-btn:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        /* 접을 수 있는 섹션 */
+        .collapsible-section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 2px solid var(--border);
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .collapsible-header:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .collapsible-header h3 {
+            margin: 0;
+            color: var(--accent);
+        }
+
+        .collapsible-icon {
+            font-size: 1rem;
+            transition: transform 0.3s;
+            color: var(--accent);
+        }
+
+        .collapsible-section.collapsed .collapsible-icon {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            padding: 0 20px 20px 20px;
+            display: block;
+        }
+
+        .collapsible-section.collapsed .collapsible-content {
+            display: none;
+        }
+
+        /* 중첩 접기 섹션 */
+        .nested-collapsible {
+            margin-top: 15px;
+        }
+
+        .nested-collapsible-header {
+            padding: 12px 15px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .nested-collapsible-header:hover {
+            background: var(--border);
+        }
+
+        .nested-collapsible-icon {
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+            color: var(--accent);
+        }
+
+        .nested-collapsible.collapsed .nested-collapsible-icon {
+            transform: rotate(-90deg);
+        }
+
+        .nested-collapsible-content {
+            padding-top: 15px;
+            display: block;
+        }
+
+        .nested-collapsible.collapsed .nested-collapsible-content {
+            display: none;
+        }
+
+        /* 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid var(--border);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--btn-action);
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        /* 폼 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Ridibatang', sans-serif;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .color-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--bg-secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Ridibatang', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+        }
+
+        /* 분류 */
+        .category-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .category-item {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-item button {
+            background: none;
+            border: none;
+            color: var(--btn-action);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+        }
+
+        .add-category-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-category-form input {
+            flex: 8;
+        }
+
+        .add-category-form .btn {
+            flex: 2;
+            padding: 12px;
+        }
+
+        /* 검색 */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            flex: 8;
+        }
+
+        .search-box .btn {
+            flex: 2;
+            padding: 12px;
+        }
+
+        /* 필터 & 정렬 */
+        .filter-buttons, .sort-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn, .sort-btn {
+            padding: 10px 18px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Ridibatang', sans-serif;
+            font-size: 1rem;
+        }
+
+        .filter-btn.active, .sort-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .filter-btn:hover, .sort-btn:hover {
+            border-color: var(--accent);
+        }
+
+        /* 포스트잇 */
+        .memos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .memo-card {
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s;
+            min-height: 200px;
+        }
+
+        .memo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .memo-card.yellow { background: var(--post-it-yellow); }
+        .memo-card.pink { background: var(--post-it-pink); }
+        .memo-card.blue { background: var(--post-it-blue); }
+        .memo-card.green { background: var(--post-it-green); }
+        .memo-card.lavender { background: var(--post-it-lavender); }
+        .memo-card.orange { background: var(--post-it-orange); }
+        .memo-card.gray { background: var(--post-it-gray); }
+
+        .memo-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .memo-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0,0,0,0.08);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .memo-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .memo-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .memo-content {
+            margin-bottom: 18px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: rgba(255, 184, 77, 0.4);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .memo-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .memo-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            color: white;
+            font-weight: 600;
+            background: var(--btn-action);
+        }
+
+        .memo-btn:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .no-memos {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        /* 복사 성공 토스트 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 2000;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .header-icons {
+                position: static;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            header {
+                padding: 20px 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .collapsible-section {
+                margin-bottom: 20px;
+            }
+
+            .collapsible-header {
+                padding: 15px;
+            }
+
+            .collapsible-content {
+                padding: 0 15px 15px 15px;
+            }
+
+            /* 관리 버튼 2열 배치 */
+            .top-controls {
+                margin-bottom: 20px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .control-btn {
+                width: 100%;
+                padding: 12px 10px;
+                font-size: 0.95rem;
+            }
+
+            .memos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .memo-card {
+                min-height: 200px;
+                padding: 20px;
+            }
+
+            /* 메모 추가 버튼 2열 */
+            .btn-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 12px;
+            }
+
+            /* 분류 추가 8:2 비율 */
+            .add-category-form {
+                display: flex;
+                gap: 10px;
+            }
+
+            .add-category-form input {
+                flex: 8;
+            }
+
+            .add-category-form .btn {
+                flex: 2;
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+
+            /* 필터/정렬 2열 */
+            .filter-buttons, .sort-buttons {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+
+            .filter-btn, .sort-btn {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            /* 검색 8:2 비율 */
+            .search-box {
+                flex-direction: row;
+            }
+
+            .search-box input {
+                flex: 8;
+            }
+
+            .search-box .btn {
+                flex: 2;
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+
+            .toast {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-icons">
+                <a href="https://toastout.github.io/toast/" class="icon-btn" title="홈으로">🍞</a>
+            </div>
+            <h1>😺 당신의 먀음</h1>
+            <p class="subtitle">포근한 메모 도서관</p>
+        </header>
+
+        <div class="top-controls">
+            <button class="control-btn" id="openCategoryModal">🏷️ 분류 관리</button>
+            <button class="control-btn" id="openManagementModal">📚 먀음 관리</button>
+        </div>
+
+        <!-- 메모 작성 폼 -->
+        <div class="collapsible-section" id="memoFormSection">
+            <div class="collapsible-header" id="memoFormToggle">
+                <h3>💛 새 먀모 작성</h3>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="form-group">
+                    <label for="memoTitle">제목</label>
+                    <input type="text" id="memoTitle" placeholder="메모 제목을 입력하세요...">
+                </div>
+                <div class="form-group">
+                    <label for="memoContent">내용</label>
+                    <textarea id="memoContent" placeholder="메모 내용을 입력하세요..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="memoCategory">분류 (선택)</label>
+                    <select id="memoCategory">
+                        <option value="">분류 선택 안함</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>색상</label>
+                    <div class="color-selector">
+                        <div class="color-option yellow active" data-color="yellow" style="background: #fff9c4;"></div>
+                        <div class="color-option pink" data-color="pink" style="background: #ffd8e4;"></div>
+                        <div class="color-option blue" data-color="blue" style="background: #d4e4ff;"></div>
+                        <div class="color-option green" data-color="green" style="background: #d4f4dd;"></div>
+                        <div class="color-option lavender" data-color="lavender" style="background: #e3d9ff;"></div>
+                        <div class="color-option orange" data-color="orange" style="background: #ffe1b2;"></div>
+                        <div class="color-option gray" data-color="gray" style="background: #e7e3dc;"></div>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="addMemoBtn">메모 추가</button>
+                    <button class="btn btn-secondary" id="clearFormBtn">입력 초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 검색/필터 -->
+        <div class="collapsible-section" id="searchFilterSection">
+            <div class="collapsible-header" id="searchFilterToggle">
+                <h3>🔍 검색 / 필터</h3>
+                <span class="collapsible-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="제목이나 내용으로 검색...">
+                    <button class="btn btn-secondary" id="clearSearchBtn">초기화</button>
+                </div>
+
+                <!-- 분류 필터 (중첩 접기) -->
+                <div class="nested-collapsible" id="filterNested">
+                    <div class="nested-collapsible-header" id="filterNestedToggle">
+                        <span>분류 필터</span>
+                        <span class="nested-collapsible-icon">▼</span>
+                    </div>
+                    <div class="nested-collapsible-content">
+                        <div class="filter-buttons" id="filterButtons">
+                            <button class="filter-btn active" data-category="">전체</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 정렬 (중첩 접기) -->
+                <div class="nested-collapsible" id="sortNested">
+                    <div class="nested-collapsible-header" id="sortNestedToggle">
+                        <span>정렬</span>
+                        <span class="nested-collapsible-icon">▼</span>
+                    </div>
+                    <div class="nested-collapsible-content">
+                        <div class="sort-buttons">
+                            <button class="sort-btn active" data-sort="newest">최신순</button>
+                            <button class="sort-btn" data-sort="oldest">오래된순</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="memos-grid" id="memosGrid"></div>
+    </div>
+
+    <!-- 분류 관리 모달 -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeCategoryModal">&times;</span>
+            <h3>🏷️ 분류 관리</h3>
+            <div class="category-list" id="categoryList"></div>
+            <div class="add-category-form">
+                <input type="text" id="newCategoryInput" placeholder="새 분류 추가...">
+                <button class="btn btn-primary" id="addCategoryBtn">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 관리 모달 -->
+    <div class="modal" id="managementModal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeManagementModal">&times;</span>
+            <h3>📚 먀음 관리</h3>
+            <div class="btn-group">
+                <button class="btn btn-secondary" id="exportBtn">내보내기 (.txt)</button>
+                <button class="btn btn-secondary" id="importBtn">불러오기</button>
+                <button class="btn btn-secondary" id="clearAllBtn">전체 초기화</button>
+            </div>
+            <input type="file" id="importFile" accept=".txt" style="display: none;">
+        </div>
+    </div>
+
+    <!-- 복사 성공 토스트 -->
+    <div class="toast" id="toast">📋 복사되었습니다!</div>
+
+    <script>
+        let memos = [];
+        let categories = ['일상', '생각', '기록'];
+        let selectedColor = 'yellow';
+        let editingIndex = null;
+        let currentFilter = '';
+        let searchQuery = '';
+        let currentSort = 'newest';
+
+        const memoTitle = document.getElementById('memoTitle');
+        const memoContent = document.getElementById('memoContent');
+        const memoCategory = document.getElementById('memoCategory');
+        const addMemoBtn = document.getElementById('addMemoBtn');
+        const clearFormBtn = document.getElementById('clearFormBtn');
+        const memosGrid = document.getElementById('memosGrid');
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const filterButtons = document.getElementById('filterButtons');
+        const toast = document.getElementById('toast');
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // 접기/펼치기
+        document.getElementById('memoFormToggle').addEventListener('click', () => {
+            document.getElementById('memoFormSection').classList.toggle('collapsed');
+        });
+
+        document.getElementById('searchFilterToggle').addEventListener('click', () => {
+            document.getElementById('searchFilterSection').classList.toggle('collapsed');
+        });
+
+        // 중첩 접기
+        document.getElementById('filterNestedToggle').addEventListener('click', () => {
+            document.getElementById('filterNested').classList.toggle('collapsed');
+        });
+
+        document.getElementById('sortNestedToggle').addEventListener('click', () => {
+            document.getElementById('sortNested').classList.toggle('collapsed');
+        });
+
+        // 모달
+        const categoryModal = document.getElementById('categoryModal');
+        const managementModal = document.getElementById('managementModal');
+        const openCategoryModal = document.getElementById('openCategoryModal');
+        const openManagementModal = document.getElementById('openManagementModal');
+        const closeCategoryModal = document.getElementById('closeCategoryModal');
+        const closeManagementModal = document.getElementById('closeManagementModal');
+
+        const categoryList = document.getElementById('categoryList');
+        const newCategoryInput = document.getElementById('newCategoryInput');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const importBtn = document.getElementById('importBtn');
+        const importFile = document.getElementById('importFile');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+
+        openCategoryModal.addEventListener('click', () => categoryModal.classList.add('active'));
+        openManagementModal.addEventListener('click', () => managementModal.classList.add('active'));
+        closeCategoryModal.addEventListener('click', () => categoryModal.classList.remove('active'));
+        closeManagementModal.addEventListener('click', () => managementModal.classList.remove('active'));
+
+        categoryModal.addEventListener('click', (e) => {
+            if (e.target === categoryModal) categoryModal.classList.remove('active');
+        });
+        managementModal.addEventListener('click', (e) => {
+            if (e.target === managementModal) managementModal.classList.remove('active');
+        });
+
+        // 색상 선택
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                selectedColor = option.dataset.color;
+            });
+        });
+
+        // 정렬
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentSort = btn.dataset.sort;
+                renderMemos();
+            });
+        });
+
+        // 검색
+        searchInput.addEventListener('input', () => {
+            searchQuery = searchInput.value.trim();
+            renderMemos();
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchQuery = '';
+            renderMemos();
+        });
+
+        // 분류 추가
+        addCategoryBtn.addEventListener('click', () => {
+            const newCategory = newCategoryInput.value.trim();
+            if (!newCategory) {
+                alert('분류 이름을 입력해주세요!');
+                return;
+            }
+            if (categories.includes(newCategory)) {
+                alert('이미 존재하는 분류입니다!');
+                return;
+            }
+            categories.push(newCategory);
+            saveCategories();
+            renderCategories();
+            renderCategorySelect();
+            renderFilters();
+            newCategoryInput.value = '';
+        });
+
+        function renderCategories() {
+            categoryList.innerHTML = categories.map(cat => `
+                <div class="category-item">
+                    <span>${cat}</span>
+                    <button onclick="deleteCategory('${cat}')">×</button>
+                </div>
+            `).join('');
+        }
+
+        window.deleteCategory = (category) => {
+            if (confirm(`"${category}" 분류를 삭제하시겠습니까?\n이 분류의 메모는 분류 없음으로 변경됩니다.`)) {
+                memos = memos.map(memo => {
+                    if (memo.category === category) {
+                        return { ...memo, category: '' };
+                    }
+                    return memo;
+                });
+                categories = categories.filter(c => c !== category);
+                saveCategories();
+                saveMemos();
+                renderCategories();
+                renderCategorySelect();
+                renderFilters();
+                renderMemos();
+            }
+        };
+
+        function renderCategorySelect() {
+            memoCategory.innerHTML = '<option value="">분류 선택 안함</option>' +
+                categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+        }
+
+        function renderFilters() {
+            filterButtons.innerHTML = `
+                <button class="filter-btn ${currentFilter === '' ? 'active' : ''}" data-category="">전체</button>
+                ${categories.map(cat => `
+                    <button class="filter-btn ${currentFilter === cat ? 'active' : ''}" data-category="${cat}">${cat}</button>
+                `).join('')}
+            `;
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.category;
+                    renderMemos();
+                });
+            });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            
+            if (isNaN(date.getTime())) {
+                return dateString;
+            }
+
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const hour = date.getHours();
+            const minute = date.getMinutes();
+            const period = hour < 12 ? '오전' : '오후';
+            const displayHour = hour % 12 || 12;
+
+            return `${year}년 ${month}월 ${day}일 ${period} ${String(displayHour).padStart(2, '0')}시 ${String(minute).padStart(2, '0')}분`;
+        }
+
+        window.copyMemo = (index) => {
+            const memo = memos[index];
+            const textToCopy = `${memo.title}\n\n${memo.content}`;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast('📋 복사되었습니다!');
+            }).catch(() => {
+                alert('복사에 실패했습니다.');
+            });
+        };
+
+        addMemoBtn.addEventListener('click', () => {
+            const title = memoTitle.value.trim();
+            const content = memoContent.value.trim();
+
+            if (!title || !content) {
+                alert('제목과 내용을 모두 입력해주세요!');
+                return;
+            }
+
+            const now = new Date().toISOString();
+
+            if (editingIndex !== null) {
+                memos[editingIndex] = {
+                    ...memos[editingIndex],
+                    title,
+                    content,
+                    category: memoCategory.value,
+                    color: selectedColor,
+                    updatedAt: now
+                };
+                editingIndex = null;
+                addMemoBtn.textContent = '메모 추가';
+            } else {
+                memos.push({
+                    title,
+                    content,
+                    category: memoCategory.value,
+                    color: selectedColor,
+                    createdAt: now,
+                    updatedAt: now
+                });
+            }
+
+            saveMemos();
+            renderMemos();
+            clearForm();
+        });
+
+        clearFormBtn.addEventListener('click', clearForm);
+
+        function clearForm() {
+            memoTitle.value = '';
+            memoContent.value = '';
+            memoCategory.value = '';
+            document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+            document.querySelector('.color-option.yellow').classList.add('active');
+            selectedColor = 'yellow';
+            editingIndex = null;
+            addMemoBtn.textContent = '메모 추가';
+        }
+
+        function renderMemos() {
+            let filtered = currentFilter === '' 
+                ? memos 
+                : memos.filter(memo => memo.category === currentFilter);
+
+            if (searchQuery) {
+                filtered = filtered.filter(memo => 
+                    memo.title.includes(searchQuery) || memo.content.includes(searchQuery)
+                );
+            }
+
+            filtered.sort((a, b) => {
+                const dateA = new Date(a.updatedAt);
+                const dateB = new Date(b.updatedAt);
+                return currentSort === 'newest' ? dateB - dateA : dateA - dateB;
+            });
+
+            if (filtered.length === 0) {
+                memosGrid.innerHTML = '<div class="no-memos">표시할 메모가 없습니다.<br>첫 메모를 작성해보세요! 😺</div>';
+                return;
+            }
+
+            memosGrid.innerHTML = filtered.map((memo) => {
+                const originalIndex = memos.indexOf(memo);
+                let title = memo.title;
+                let content = memo.content;
+
+                if (searchQuery) {
+                    const regex = new RegExp(`(${escapeRegex(searchQuery)})`, 'gi');
+                    title = title.replace(regex, '<span class="highlight">$1</span>');
+                    content = content.replace(regex, '<span class="highlight">$1</span>');
+                }
+
+                const displayDate = memo.updatedAt !== memo.createdAt 
+                    ? formatDate(memo.updatedAt)
+                    : formatDate(memo.createdAt);
+
+                return `
+                <div class="memo-card ${memo.color}">
+                    ${memo.category ? `<div class="memo-category">${memo.category}</div>` : ''}
+                    <div class="memo-header">
+                        <div class="memo-title">${title}</div>
+                        <div class="memo-date">${displayDate}</div>
+                    </div>
+                    <div class="memo-content">${content}</div>
+                    <div class="memo-actions">
+                        <button class="memo-btn" onclick="copyMemo(${originalIndex})">복사</button>
+                        <button class="memo-btn" onclick="editMemo(${originalIndex})">수정</button>
+                        <button class="memo-btn" onclick="deleteMemo(${originalIndex})">삭제</button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function escapeRegex(str) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        window.editMemo = (index) => {
+            const memo = memos[index];
+            memoTitle.value = memo.title;
+            memoContent.value = memo.content;
+            memoCategory.value = memo.category || '';
+            selectedColor = memo.color;
+            
+            document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+            document.querySelector(`.color-option.${memo.color}`).classList.add('active');
+            
+            editingIndex = index;
+            addMemoBtn.textContent = '수정 완료';
+            
+            document.getElementById('memoFormSection').classList.remove('collapsed');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.deleteMemo = (index) => {
+            if (confirm('정말로 이 메모를 삭제하시겠습니까?')) {
+                memos.splice(index, 1);
+                saveMemos();
+                renderMemos();
+            }
+        };
+
+        function saveMemos() {
+            localStorage.setItem('myMeow_memos', JSON.stringify(memos));
+        }
+
+        function saveCategories() {
+            localStorage.setItem('myMeow_categories', JSON.stringify(categories));
+        }
+
+        function loadMemos() {
+            const saved = localStorage.getItem('myMeow_memos');
+            if (saved) {
+                memos = JSON.parse(saved);
+                renderMemos();
+            }
+        }
+
+        function loadCategories() {
+            const saved = localStorage.getItem('myMeow_categories');
+            if (saved) {
+                categories = JSON.parse(saved);
+            }
+            renderCategories();
+            renderCategorySelect();
+            renderFilters();
+        }
+
+        exportBtn.addEventListener('click', () => {
+            if (memos.length === 0) {
+                alert('내보낼 메모가 없습니다!');
+                return;
+            }
+
+            const text = memos.map(memo => 
+                `[제목] ${memo.title}\n[내용]\n${memo.content}\n[분류] ${memo.category || '없음'}\n[작성일] ${memo.createdAt}\n[수정일] ${memo.updatedAt}\n[색상] ${memo.color}\n${'='.repeat(50)}\n`
+            ).join('\n');
+
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `먀음_메모_${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        importBtn.addEventListener('click', () => importFile.click());
+
+        importFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const text = event.target.result;
+                    const blocks = text.split('='.repeat(50)).filter(b => b.trim());
+                    
+                    const imported = blocks.map(block => {
+                        const titleMatch = block.match(/\[제목\]\s*(.+)/);
+                        const contentMatch = block.match(/\[내용\]\s*\n([\s\S]+?)\n\[분류\]/);
+                        const categoryMatch = block.match(/\[분류\]\s*(.+)/);
+                        const createdMatch = block.match(/\[작성일\]\s*(.+)/);
+                        const updatedMatch = block.match(/\[수정일\]\s*(.+)/);
+                        const colorMatch = block.match(/\[색상\]\s*(.+)/);
+
+                        const category = categoryMatch ? categoryMatch[1].trim() : '';
+                        if (category && category !== '없음' && !categories.includes(category)) {
+                            categories.push(category);
+                        }
+
+                        return {
+                            title: titleMatch ? titleMatch[1].trim() : '제목 없음',
+                            content: contentMatch ? contentMatch[1].trim() : '',
+                            category: category === '없음' ? '' : category,
+                            createdAt: createdMatch ? createdMatch[1].trim() : new Date().toISOString(),
+                            updatedAt: updatedMatch ? updatedMatch[1].trim() : new Date().toISOString(),
+                            color: colorMatch ? colorMatch[1].trim() : 'yellow'
+                        };
+                    });
+
+                    if (confirm(`${imported.length}개의 메모를 불러왔습니다.\n기존 메모에 추가하시겠습니까?`)) {
+                        memos = [...memos, ...imported];
+                        saveCategories();
+                        saveMemos();
+                        renderCategories();
+                        renderCategorySelect();
+                        renderFilters();
+                        renderMemos();
+                        managementModal.classList.remove('active');
+                    }
+                } catch (error) {
+                    alert('파일을 불러오는 중 오류가 발생했습니다.');
+                }
+            };
+            reader.readAsText(file);
+            e.target.value = '';
+        });
+
+        clearAllBtn.addEventListener('click', () => {
+            if (confirm('정말로 모든 메모를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
+                memos = [];
+                saveMemos();
+                renderMemos();
+                managementModal.classList.remove('active');
+            }
+        });
+
+        loadCategories();
+        loadMemos();
+    </script>
+</body>
+</html>
